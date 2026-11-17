@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+
+# Environment & Secrets (NEVER commit!)
+.env
+.env.*
+!.env.example
+*.session
+sessions/
+
+# Database & runtime data
+data/
+*.db
+*.sqlite
+*.sqlite-*
+
+# Logs & OS
+logs/
+*.log
+.DS_Store
+Thumbs.db
