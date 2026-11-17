@@ -24,11 +24,19 @@ export function normalizeText(text: string): string {
     .trim();
 }
 
+function isSafeRegex(pattern: string): boolean {
+  if (pattern.length > 128) return false;
+  // Reject nested quantifiers such as (a+)+ or (.*)* to mitigate ReDoS
+  if (/\([^)]*[+*][^)]*\)[+*{]/.test(pattern)) return false;
+  return true;
+}
+
 export function isIgnored(text: string, ignoreRules: IgnoreRuleInput[]): string | null {
   const normalized = normalizeText(text);
   for (const rule of ignoreRules) {
     try {
       if (rule.isRegex) {
+        if (!isSafeRegex(rule.pattern)) continue;
         const regex = new RegExp(rule.pattern, 'i');
         if (regex.test(normalized)) {
           return rule.pattern;
@@ -43,19 +51,19 @@ export function isIgnored(text: string, ignoreRules: IgnoreRuleInput[]): string 
   return null;
 }
 
-export function matchRules(params: {
+export function matchRules<T extends WatchRuleInput>(params: {
   text: string;
   sourceId: number;
   parsedPrice: ParsedPrice | null;
-  watchRules: WatchRuleInput[];
+  watchRules: T[];
   ignoreRules: IgnoreRuleInput[];
-}): Array<{ rule: WatchRuleInput; reason: string }> {
+}): Array<{ rule: T; reason: string }> {
   if (isIgnored(params.text, params.ignoreRules) !== null) {
     return [];
   }
 
   const normalized = normalizeText(params.text);
-  const matches: Array<{ rule: WatchRuleInput; reason: string }> = [];
+  const matches: Array<{ rule: T; reason: string }> = [];
 
   for (const rule of params.watchRules) {
     if (rule.sourceIds.length > 0 && !rule.sourceIds.includes(params.sourceId)) {
@@ -75,7 +83,7 @@ export function matchRules(params: {
     let regexOk = true;
     if (hasRegex && rule.regex) {
       try {
-        regexOk = new RegExp(rule.regex, 'i').test(normalized);
+        regexOk = isSafeRegex(rule.regex) ? new RegExp(rule.regex, 'i').test(normalized) : false;
       } catch {
         regexOk = false;
       }
