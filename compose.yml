@@ -1,0 +1,22 @@
+services:
+  deal-sniper:
+    image: ghcr.io/luizgdpulz/deal-sniper:latest
+    container_name: deal-sniper
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data:rw
+    # Outbound-only architecture: zero inbound ports exposed on host or proxy-net
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
