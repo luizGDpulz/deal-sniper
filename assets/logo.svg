@@ -1,0 +1,28 @@
+<svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="14" y1="10" x2="106" y2="110" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="emeraldGlow" x1="34" y1="28" x2="86" y2="92" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Shield / Scope Ring -->
+  <circle cx="60" cy="60" r="54" fill="url(#bgGrad)" stroke="#1e293b" stroke-width="2"/>
+  <circle cx="60" cy="60" r="42" stroke="#10b981" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <circle cx="60" cy="60" r="30" stroke="#34d399" stroke-opacity="0.7" stroke-width="1.5"/>
+
+  <!-- Precision Crosshair Ticks -->
+  <path d="M60 10V25M60 95V110M10 60H25M95 60H110" stroke="#34d399" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Stylized Dollar Sign ($) -->
+  <path d="M60 32V88" stroke="url(#emeraldGlow)" stroke-width="4" stroke-linecap="round"/>
+  <path d="M71 45.5C71 40.8 66.2 38 60 38C53.8 38 49 40.9 49 45.5C49 50.6 54.4 52.3 60 53.8C65.6 55.3 71 57.2 71 63C71 68.1 66 71.5 60 71.5C53.5 71.5 48.5 68.2 48.5 63" stroke="#f8fafc" stroke-width="4.5" stroke-linecap="round"/>
+
+  <!-- Target Lock Accent Dot -->
+  <circle cx="88" cy="32" r="4" fill="#10b981"/>
+  <circle cx="88" cy="32" r="7" stroke="#10b981" stroke-opacity="0.35" stroke-width="1.5"/>
+</svg>
